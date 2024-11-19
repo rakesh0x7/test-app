@@ -1,0 +1,107 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #4CAF50, #2196F3);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header */
+h1 {
+    margin: 20px;
+    font-size: 2em;
+    text-align: center;
+}
+
+/* Links and buttons */
+a, button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+a:hover, button:hover {
+    background-color: #0056b3;
+}
+
+/* Containers */
+.container {
+    background: #fff;
+    color: #333;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 20px;
+}
+
+/* Input fields */
+input[type="text"], input[type="email"], input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Submit buttons */
+button[type="submit"] {
+    width: 100%;
+    background-color: #28A745;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Profile Container */
+.profile-container {
+    text-align: left;
+    width: 90%;
+    max-width: 500px;
+}
+
+/* Forms */
+form {
+    margin-top: 10px;
+}
+
+/* Footer */
+footer {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #ddd;
+}
+
+#logoutButton {
+    background-color: #DC3545;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+    font-size: 16px;
+    width: 100%;
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+}

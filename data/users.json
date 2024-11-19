@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1732005401102",
+    "name": "test",
+    "email": "rakesh0x7@r.com",
+    "password": "$2b$10$Rv6Ci9zXYHgNAFstNicokeGwuVoCzF.dx.ZkIiT5dv9eA63flW1ba"
+  },
+  {
+    "id": "1732005490487",
+    "name": "a",
+    "email": "a@a.com",
+    "password": "$2b$10$MthuaaQbYNKDZYOwX5GVF.P3o1ttNRReazFzrVkQQOKB7YIrOaGXa"
+  },
+  {
+    "id": "1732006166395",
+    "name": "testaaaa",
+    "email": "test@a.com",
+    "password": "$2b$10$MAWs2MtvLuQYPXj17y6dsOr7UgtYuXHrdvKt82/nFunGpxu.lgzLW"
+  },
+  {
+    "id": "1732007493150",
+    "name": "root",
+    "email": "rakesh0x7+16@wearehackerone.com",
+    "password": "$2b$10$OXrxFtEtwVfU7zPQsLd6yuwnt2eXYX6Awh9qO2VC4hV6axxGzDQnC"
+  }
+]
