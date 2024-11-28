@@ -28,5 +28,17 @@
     "name": "h1pocaja",
     "email": "rakesh0x7+h1poc@wearehackerone.com",
     "password": "$2b$10$8N7zjIMcH4t1v0eU1xPOUehSSZCEgKLuxTwvltYC30bpapT2MQkGu"
+  },
+  {
+    "id": 6,
+    "email": "abcf@wearehackerone.com",
+    "name": "patc",
+    "password": null
+  },
+  {
+    "id": 7,
+    "email": "abcf+1@wearehackerone.com",
+    "name": "test",
+    "password": null
   }
 ]

@@ -5,9 +5,9 @@ const fs = require("fs");
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-const CLIENT_ID = "0ec6c7fce99b0338cb80c61223c4abe55ec919c9f8c924386c9d3dcfd2644092";
-const CLIENT_SECRET = "57d895931cf6bb142bd9616d9b77b5f81dde43360c0cd767bcd883405dcc362f";
-const REDIRECT_URI = "https://test-app-r7t7.onrender.com/callback";
+const CLIENT_ID = "186dd9d367bb4bdced88ec5970b82916f4ac7ad6c77ecb422b8acefa259515f0";
+const CLIENT_SECRET = "6d49285c3d00cb16e560d782c80cd232775b042168be004efc3a6c94a815a794";
+const REDIRECT_URI = "http://localhost:5000/callback";
 const JWT_SECRET = process.env.JWT_SECRET; // Ensure you have a secret for JWT
 
 // Utility functions for managing users
@@ -17,20 +17,37 @@ const writeUsers = (users) => fs.writeFileSync(USERS_FILE, JSON.stringify(users,
 
 // Route to initiate login with Sentry
 router.get("/sentry-login", (req, res) => {
-
-    const loginUrl = `https://sentry.io/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    const scope = encodeURIComponent("project:read event:read"); // Specify the required scopes
+    const loginUrl = `https://sentry.io/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${scope}`;
     res.redirect(loginUrl);
 });
+
 
 // Callback route for Sentry OAuth
 router.get("/callback", async (req, res) => {
     const code = req.query.code;
+    const state = req.query.state; // State parameter contains the token in the first call
 
     if (!code) {
         return res.status(400).send("Authorization code not provided");
     }
 
     try {
+        if (state) {
+            // Extract the token from the state parameter (second request)
+            console.log("Extracted Token from State:", state);
+            console.log("Authorization Code (2nd):", code);
+        
+
+            // Log the second code and redirect the user to their profile page
+            return res.send(
+                `<html><script>window.localStorage.setItem('token', '${state}'); window.localStorage.setItem('code', '${code}'); window.location.href = 'profile.html';</script></html>`
+            );
+        }
+
+        // Handle the first authorization code
+        console.log("Authorization Code (1st):", code);
+
         // Exchange authorization code for access token
         const tokenResponse = await axios.post(
             "https://sentry.io/oauth/token/",
@@ -49,8 +66,8 @@ router.get("/callback", async (req, res) => {
         );
 
         // Extract user details from the token response
-        const { data } = tokenResponse; // Assuming tokenResponse contains the structure as given
-        // console.log(data);
+        const { data } = tokenResponse;
+        console.log("Token Response:", data);
 
         // Extract user data
         const email = data.user.email;
@@ -63,7 +80,6 @@ router.get("/callback", async (req, res) => {
         // Check if user exists
         let users = readUsers();
         let user = users.find((u) => u.email === email);
-     
 
         if (!user) {
             // If user doesn't exist, register them
@@ -85,12 +101,16 @@ router.get("/callback", async (req, res) => {
             { expiresIn: '1h' } // Set the expiration time for the token
         );
 
+       
+        // Redirect to Sentry's authorization page again for the second code
+        const scope = encodeURIComponent("project:read event:read");
+        const secondLoginUrl = `https://sentry.io/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${scope}&state=${token}`;
 
-        res.send("<html><script>window.localStorage.setItem('token', '"+token+"');window.location.href = 'profile.html';</script></html>")
-
+        console.log("Redirecting to fetch second authorization code...");
+        return res.redirect(secondLoginUrl);
     } catch (error) {
         console.error("Error during Sentry OAuth:", error.message);
-        res.status(500).send("Something went wrong during the OAuth process");
+        return res.status(500).send("Something went wrong during the OAuth process");
     }
 });
 
