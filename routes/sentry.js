@@ -7,7 +7,7 @@ const router = express.Router();
 
 const CLIENT_ID = "335315419f615784535df69023a8edfcb659239b5fd5680d2ea5c9e8ca845fe8";
 const CLIENT_SECRET = "472821f4692886d8db496ca38aa76efccd40d4469ecf78554d1f376e4daab655";
-const REDIRECT_URI = "http://localhost:5000/callback";
+const REDIRECT_URI = "https://oauth-code.onrender.com/callback";
 const JWT_SECRET = process.env.JWT_SECRET; // Ensure you have a secret for JWT
 
 // Utility functions for managing users
