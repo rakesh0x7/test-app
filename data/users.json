@@ -31,12 +31,6 @@
   },
   {
     "id": 6,
-    "email": "abcf@wearehackerone.com",
-    "name": "patc",
-    "password": null
-  },
-  {
-    "id": 7,
     "email": "abcf+1@wearehackerone.com",
     "name": "test",
     "password": null
