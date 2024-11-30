@@ -5,9 +5,9 @@ const fs = require("fs");
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-const CLIENT_ID = "0ec6c7fce99b0338cb80c61223c4abe55ec919c9f8c924386c9d3dcfd2644092";
-const CLIENT_SECRET = "57d895931cf6bb142bd9616d9b77b5f81dde43360c0cd767bcd883405dcc362f";
-const REDIRECT_URI = "https://test-app-r7t7.onrender.com/callback";
+const CLIENT_ID = "186dd9d367bb4bdced88ec5970b82916f4ac7ad6c77ecb422b8acefa259515f0";
+const CLIENT_SECRET = "c71d00ee5d34b56d80e06dab06b7e7315cc33691cc8beca8c1d17f6aa4b0c4c8";
+const REDIRECT_URI = "http://localhost:5000/";
 const JWT_SECRET = process.env.JWT_SECRET; // Ensure you have a secret for JWT
 
 // Utility functions for managing users
@@ -18,7 +18,8 @@ const writeUsers = (users) => fs.writeFileSync(USERS_FILE, JSON.stringify(users,
 // Route to initiate login with Sentry
 router.get("/sentry-login", (req, res) => {
 
-    const loginUrl = `https://sentry.io/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    const scope = encodeURIComponent("project:read event:read"); // Specify the required scopes
+    const loginUrl = `https://sentry.io/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${scope}`;
     res.redirect(loginUrl);
 });
 
@@ -31,6 +32,7 @@ router.get("/callback", async (req, res) => {
     }
 
     try {
+        
         // Exchange authorization code for access token
         const tokenResponse = await axios.post(
             "https://sentry.io/oauth/token/",
